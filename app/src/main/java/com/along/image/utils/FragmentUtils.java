@@ -31,8 +31,8 @@ public class FragmentUtils extends AppCompatActivity {
             transaction.show(mShowFragment);
         }else {
             try {
-                Fragment fragment = (Fragment) Class.forName(fragmentTag).newInstance();
-                transaction.add(resId,fragment,fragmentTag);
+                mShowFragment = (Fragment) Class.forName(fragmentTag).newInstance();
+                transaction.add(resId,mShowFragment,fragmentTag);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -43,15 +43,29 @@ public class FragmentUtils extends AppCompatActivity {
         }
         transaction.commit();
     }
-
+    /**
+     * 根据Class切换Fragment 减少内存浪费
+     */
     public void switchFragmentByClass(int resId,Class<? extends Fragment> cls){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (mShowFragment != null) {
             transaction.hide(mShowFragment);
         }
-        Fragment fragment = fragmentManager.findFragmentByTag(cls.getName());
-        transaction.add(resId,fragment,cls.getName());
+        mShowFragment = fragmentManager.findFragmentByTag(cls.getName());
+        if (mShowFragment != null) {
+            transaction.show(mShowFragment);
+        }else {
+            try {
+                mShowFragment=cls.newInstance();
+                transaction.add(resId,mShowFragment,cls.getName());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
         transaction.commit();
     }
 }
