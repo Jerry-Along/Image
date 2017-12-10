@@ -62,6 +62,7 @@ public class DataBaseUtils {
             model.setSex(cursor.getString(cursor.getColumnIndex(Contracts.TABLE_NAME.COLUM3)));
             models.add(model);
         }
+        cursor.close();
         return models;
     }
 
