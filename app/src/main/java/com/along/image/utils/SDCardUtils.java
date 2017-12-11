@@ -5,11 +5,13 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -192,6 +194,21 @@ public class SDCardUtils {
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }finally {
+                if (fis != null) {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (baos != null) {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
         }else {
@@ -201,7 +218,36 @@ public class SDCardUtils {
         return null;
     }
 
+    public static String readFromSdLine(Context context,String filePath){
+        if (Environment.getExternalStorageDirectory().equals(Environment.MEDIA_MOUNTED)) {
+            BufferedReader br=null;
+            StringBuilder result=new StringBuilder();
 
+            try {
+                br=new BufferedReader(new FileReader(filePath));
+                String str=null;
+                while ((str = br.readLine()) != null) {
+                    result.append(str);
+                }
+                return result.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }else {
+            Toast.makeText(context,"哎呀，SD卡未找到！",Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        return null;
+    }
 
 
 
