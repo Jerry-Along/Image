@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  * @author Along
  */
 
-public class Contracts {
+public class DbContracts {
     public static final String DATABASE_NAME="";
     public static final int DATABASE_VERSION=1;
 

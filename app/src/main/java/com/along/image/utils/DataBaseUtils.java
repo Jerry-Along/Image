@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.along.image.contract.Contracts;
+import com.along.image.contract.DbContracts;
 import com.along.image.database.DataBaseHelper;
 import com.along.image.model.TableModel;
 
@@ -37,12 +37,12 @@ public class DataBaseUtils {
     public static boolean insertContent(Context context,String values1,String values2,String values3,String values4,String values5){
         SQLiteDatabase dataBase = getDataBase(context);
         ContentValues values = new ContentValues();
-        values.put(Contracts.TABLE_NAME.COLUM1,values1);
-        values.put(Contracts.TABLE_NAME.COLUM2,values2);
-        values.put(Contracts.TABLE_NAME.COLUM3,values3);
-        values.put(Contracts.TABLE_NAME.COLUM4,values4);
-        values.put(Contracts.TABLE_NAME.COLUM5,values5);
-        long insertNum = dataBase.insert(Contracts.TABLE_NAME.TABLE_NAME, null, values);
+        values.put(DbContracts.TABLE_NAME.COLUM1,values1);
+        values.put(DbContracts.TABLE_NAME.COLUM2,values2);
+        values.put(DbContracts.TABLE_NAME.COLUM3,values3);
+        values.put(DbContracts.TABLE_NAME.COLUM4,values4);
+        values.put(DbContracts.TABLE_NAME.COLUM5,values5);
+        long insertNum = dataBase.insert(DbContracts.TABLE_NAME.TABLE_NAME, null, values);
         return insertNum!=-1;
     }
 
@@ -51,15 +51,15 @@ public class DataBaseUtils {
      */
     public static List<TableModel> queryTableName(Context context){
         SQLiteDatabase dataBase = getDataBase(context);
-        Cursor cursor = dataBase.query(Contracts.TABLE_NAME.TABLE_NAME, null, null, null, null, null, null, null);
+        Cursor cursor = dataBase.query(DbContracts.TABLE_NAME.TABLE_NAME, null, null, null, null, null, null, null);
 
         List<TableModel> models=new ArrayList<>();
         while (cursor.moveToNext()) {
             //将查到的每一行数据放到数据集合
             TableModel model=new TableModel();
-            model.setName(cursor.getString(cursor.getColumnIndex(Contracts.TABLE_NAME.COLUM1)));
-            model.setAge(cursor.getInt(cursor.getColumnIndex(Contracts.TABLE_NAME.COLUM2)));
-            model.setSex(cursor.getString(cursor.getColumnIndex(Contracts.TABLE_NAME.COLUM3)));
+            model.setName(cursor.getString(cursor.getColumnIndex(DbContracts.TABLE_NAME.COLUM1)));
+            model.setAge(cursor.getInt(cursor.getColumnIndex(DbContracts.TABLE_NAME.COLUM2)));
+            model.setSex(cursor.getString(cursor.getColumnIndex(DbContracts.TABLE_NAME.COLUM3)));
             models.add(model);
         }
         cursor.close();
@@ -68,7 +68,7 @@ public class DataBaseUtils {
 
     public static boolean deleteTableByName(Context context,String delName){
         SQLiteDatabase dataBase = getDataBase(context);
-        int delete = dataBase.delete(Contracts.TABLE_NAME.TABLE_NAME, Contracts.TABLE_NAME.ID + "=?", new String[]{delName});
+        int delete = dataBase.delete(DbContracts.TABLE_NAME.TABLE_NAME, DbContracts.TABLE_NAME.ID + "=?", new String[]{delName});
         return delete!=0;
     }
 }
