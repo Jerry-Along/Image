@@ -46,7 +46,17 @@ public class ImageLoadUtils {
         container.setTag(url);
 
         final MyHandler handler=new MyHandler(container,url);
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(CPU_CORE + 1,
+                CPU_CORE * 2 + 1,
+                1,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<Runnable>(128), new ThreadFactory() {
+            @Override
+            public Thread newThread(@NonNull Runnable r) {
 
+                return new Thread(r,"ImageLoadUtils");
+            }
+        });
 
         Runnable runnable = new Runnable() {
             @Override
@@ -67,17 +77,7 @@ public class ImageLoadUtils {
                 }
             }
         };
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(CPU_CORE + 1,
-                CPU_CORE * 2 + 1,
-                1,
-                TimeUnit.SECONDS,
-                new LinkedBlockingQueue<Runnable>(128), new ThreadFactory() {
-            @Override
-            public Thread newThread(@NonNull Runnable r) {
 
-                return new Thread(r,"ImageLoadUtils");
-            }
-        });
         executor.execute(runnable);
 
     }
