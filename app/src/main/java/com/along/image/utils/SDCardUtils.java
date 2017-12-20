@@ -13,12 +13,61 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by mip on 2017/12/10.
  */
 
 public class SDCardUtils {
+
+    private static Context mContext;
+
+    public static void init(Context context){
+        mContext=context;
+    }
+
+    /**
+     *  获取内部私有缓存
+     * @return 存储的路径
+     */
+    public static String getCachDir(){
+        if (mContext == null) {
+            throw  new NullPointerException("ImageLoadUtil还未进行初始化");
+        }
+        File cacheDir = mContext.getCacheDir();
+        return cacheDir.getAbsolutePath();
+    }
+
+    /**
+     * MD5 摘要算法
+     * MD5会生成一个128位的2进制数组
+     * JAVA中内置生成的是16进制的数组 32
+     * @return
+     */
+    public static String MD5Message(String url){
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            md5.update(url.getBytes());
+            //获取摘要后的数据
+            byte[] digest = md5.digest();
+            String message= hex2String(digest);
+            return message;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "Error_name";
+    }
+    public static String hex2String(byte[] bytes){
+        StringBuffer sb=new StringBuffer();
+        for (byte b : bytes) {
+            sb.append(String.format("%2x",b));
+        }
+        return sb.toString();
+    }
+
+
 
     /**
      * 计算SD的可用空间
@@ -248,14 +297,4 @@ public class SDCardUtils {
         }
         return null;
     }
-
-
-
-
-
-
-
-
-
-
 }
