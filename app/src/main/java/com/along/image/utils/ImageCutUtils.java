@@ -28,6 +28,8 @@ public class ImageCutUtils {
          * 大于1 2的n次幂值，向下取整
          */
         options.inSampleSize=max;
+        //关闭解码边缘
+        options.inJustDecodeBounds=false;
         return BitmapFactory.decodeByteArray(bytes,0,bytes.length, options);
     }
 
