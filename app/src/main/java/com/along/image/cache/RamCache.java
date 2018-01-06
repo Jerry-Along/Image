@@ -20,7 +20,7 @@ public class RamCache implements ImageCache{
             @Override
             protected int sizeOf(String key, Bitmap value) {
                 //用来计算一个item的大小(每张图片)
-//                int size = value.getHeight() * value.getRowBytes();
+///                int size = value.getHeight() * value.getRowBytes();
                 int size = value.getByteCount();
                 return size;
             }
