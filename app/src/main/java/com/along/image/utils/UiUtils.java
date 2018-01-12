@@ -3,6 +3,7 @@ package com.along.image.utils;
 import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -39,6 +40,26 @@ public class UiUtils {
 
     public static long getMainThreadId() {
         return MyApp.getMainThreadId();
+    }
+
+    /**
+     *  切换为全屏(横屏)
+     */
+    public static void setLandFullScreen(Activity activity){
+        //添加全屏的标记
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //设置请求全屏
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    }
+
+    /**
+     *  取消全屏(横屏)
+     */
+    public static void clearLandFullScreen(Activity activity){
+        //添加取消全屏的标记
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //设置请求全屏
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**
