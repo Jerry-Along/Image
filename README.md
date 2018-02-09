@@ -34,4 +34,6 @@
 >* ListView多布局适配器
 13. 2018-01-12
 >* UiUtils 添加设置全屏的标记
->*
+>* RecyclerView、CardView 导包
+14. 2018-02-09
+>* AE动画属性调试
