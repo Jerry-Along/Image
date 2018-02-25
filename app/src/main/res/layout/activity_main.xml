@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.along.image.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
+   <!-- <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_weight="1"
         app:layoutManager="android.widget.LinearLayout"
@@ -19,7 +19,14 @@
         app:cardCornerRadius="20dp"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
 
 
 </LinearLayout>
